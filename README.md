@@ -7,9 +7,7 @@
 <link rel="stylesheet" href="/src/styles/globals.css" onerror="this.remove()">
 
 <style>
-/* ----------------------------------------------
-   THEME + GLOBAL RESET (AESTHETIC UPGRADE)
-------------------------------------------------*/
+
 :root {
     --bg: #f5f8fa;
     --card: #ffffff;
@@ -35,7 +33,6 @@ body {
     line-height: 1.55;
 }
 
-/* HEADER */
 header {
     background: linear-gradient(90deg, #e8f6ff, transparent);
     padding: 20px 0 16px;
@@ -85,7 +82,6 @@ header {
     border-color: rgba(43,159,218,0.18);
 }
 
-/* CARD STYLE */
 .card {
     background: var(--card);
     border-radius: var(--radius);
@@ -97,7 +93,6 @@ header {
 
 .card:hover { box-shadow: var(--shadow-md); }
 
-/* BUTTONS */
 button {
     cursor: pointer;
     border: 0;
@@ -123,7 +118,6 @@ button.ghost {
 
 button.ghost:hover { background: var(--accent-light); }
 
-/* Emoji buttons */
 .emoji-btn {
     font-size: 16px;
     padding: 10px 12px;
@@ -136,7 +130,6 @@ button.ghost:hover { background: var(--accent-light); }
 .emoji-btn:hover { background: var(--accent-light); }
 .emoji-btn.selected { outline: 3px solid rgba(43,159,218,0.28); }
 
-/* BREATHING ANIMATION */
 #breath-circle {
     width: 130px;
     height: 130px;
@@ -150,7 +143,6 @@ button.ghost:hover { background: var(--accent-light); }
     transition: transform 1.2s ease, box-shadow .2s;
 }
 
-/* TEXT INPUTS */
 input, textarea, select {
     width: 100%;
     font-family: inherit;
@@ -166,7 +158,6 @@ input:focus, textarea:focus, select:focus {
     outline: 3px solid rgba(43,159,218,0.14);
 }
 
-/* GRID & UTIL */
 .tool-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -188,7 +179,6 @@ input:focus, textarea:focus, select:focus {
     padding: 12px;
 }
 
-/* FOOTER & MODAL */
 footer {
     max-width: 900px;
     margin: 50px auto 80px;
@@ -216,7 +206,6 @@ footer {
     box-shadow: var(--shadow-md);
 }
 
-/* Posts */
 .post {
     background: #fbfdff;
     border: 1px solid #e2eef7;
@@ -233,7 +222,6 @@ footer {
 
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
-/* Responsive */
 @media (max-width: 640px) {
     #breath-circle { width: 110px; height: 110px; }
 }
@@ -396,9 +384,6 @@ footer {
     </div>
 
 <script>
-/* --------------------------
-   Modal
----------------------------*/
 const overlay = document.getElementById('overlay'),
       modalTitle = document.getElementById('modal-title'),
       modalBody = document.getElementById('modal-body');
@@ -420,9 +405,6 @@ document.getElementById('modal-ok').addEventListener('click', closeModal);
 overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
-/* --------------------------
-   Mood picker (with quotable fallback)
----------------------------*/
 const moodButtons = document.querySelectorAll('.emoji-btn');
 const moodTag = { happy:'happiness', sad:'hope', confuse:'wisdom', afraid:'courage', mad:'anger' };
 const fallback = {
@@ -437,7 +419,7 @@ async function fetchQuoteForMood(mood) {
     const tag = moodTag[mood] || 'inspirational';
     openModal('Finding a quote...', '<span class="spinner" aria-hidden="true"></span> Finding an uplifting quote...');
     try {
-        // quick fetch to quotable.io; if blocked, fallback
+        
         const res = await fetch(`https://api.quotable.io/random?tags=${encodeURIComponent(tag)}`);
         if (!res.ok) throw new Error('no-res');
         const data = await res.json();
@@ -454,9 +436,6 @@ moodButtons.forEach(btn => btn.addEventListener('click', () => {
     fetchQuoteForMood(btn.getAttribute('data-mood'));
 }));
 
-/* --------------------------
-   Forum (local)
----------------------------*/
 const postText = document.getElementById('post-text'),
       postBtn = document.getElementById('post-btn'),
       clearBtn = document.getElementById('clear-btn'),
@@ -510,9 +489,6 @@ if (postBtn) {
 clearBtn && clearBtn.addEventListener('click', () => { postText.value = ''; updateCharCount(); });
 loadPosts();
 
-/* --------------------------
-   Breathing trainer
----------------------------*/
 let breathTimer = null;
 const circle = document.getElementById('breath-circle'),
       startBreath = document.getElementById('start-breath'),
@@ -536,9 +512,6 @@ function animateBreathOnce() {
 startBreath && startBreath.addEventListener('click', () => { animateBreathOnce(); });
 stopBreath && stopBreath.addEventListener('click', () => { circle.style.transform = ''; circle.textContent = 'Breathe'; if (breathTimer) { clearInterval(breathTimer); breathTimer = null; } });
 
-/* --------------------------
-   Journaling
----------------------------*/
 const prompts = [
     "Name one thing you can be kind to yourself for today.",
     "Describe a small moment that felt okay recently.",
@@ -562,9 +535,6 @@ saveJournal && saveJournal.addEventListener('click', () => {
     try { localStorage.setItem('journals', JSON.stringify(arr)); if (journal) journal.value = ''; openModal('Saved', 'Journal entry saved locally.'); } catch (e) { openModal('Error', 'Unable to save locally.'); }
 });
 
-/* --------------------------
-   CBT thought record
----------------------------*/
 const sit = document.getElementById('situation'),
       thought = document.getElementById('thought'),
       alt = document.getElementById('alternative'),
@@ -602,9 +572,6 @@ saveThought && saveThought.addEventListener('click', () => {
 clearThought && clearThought.addEventListener('click', () => { if (sit) sit.value = ''; if (thought) thought.value = ''; if (alt) alt.value = ''; });
 loadThoughts();
 
-/* --------------------------
-   Micro-actions
----------------------------*/
 const microList = ["Stand up and stretch for 30s","Drink a glass of water","Step outside for 1 minute of fresh air","Send a short message to a friend","Name 3 things you can see right now"];
 const microEl = document.getElementById('micro'),
       nextMicro = document.getElementById('next-micro'),
@@ -615,9 +582,6 @@ nextMicro && nextMicro.addEventListener('click', setMicro);
 doneMicro && doneMicro.addEventListener('click', () => { openModal('Nice work', 'Small actions add up.'); setMicro(); });
 setMicro();
 
-/* --------------------------
-   Wellness check
----------------------------*/
 const runBtn = document.getElementById('test-run'),
       clearTestBtn = document.getElementById('test-clear'),
       resultEl = document.getElementById('test-result');
@@ -647,7 +611,6 @@ clearTestBtn && clearTestBtn.addEventListener('click', () => {
     if (resultEl) resultEl.innerHTML = '';
 });
 
-/* misc quick actions kept */
 document.querySelectorAll('a[href="#resources"]').forEach(a => a.addEventListener('click', () => {}));
 </script>
 
