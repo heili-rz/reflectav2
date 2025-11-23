@@ -371,7 +371,7 @@ footer {
     </main>
 
     <footer>
-        <div class="container">Local-first demo. Content stays on this device unless you export it.</div>
+        <div class="container">© 2025 Reflecta Toolkit.</div>
     </footer>
 
     <div id="overlay" class="overlay" role="dialog" aria-modal="true" aria-hidden="true">
