@@ -371,7 +371,7 @@ footer {
     </main>
 
     <footer>
-        <div class="container">© 2025 Reflecta Toolkit.</div>
+        <div class="container">© 2025 Reflecta — Find your calm. </div>
     </footer>
 
     <div id="overlay" class="overlay" role="dialog" aria-modal="true" aria-hidden="true">
